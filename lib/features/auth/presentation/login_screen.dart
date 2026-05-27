@@ -32,10 +32,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (mounted) context.go('/dashboard/notes');
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(e.toString()),
-          backgroundColor: const Color(0xFFED4245),
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: const Color(0xFFED4245),
+          ),
+        );
       }
     }
   }
@@ -53,14 +55,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.note_alt_rounded,
-                    size: 64, color: Color(0xFF5865F2)),
+                const Icon(
+                  Icons.note_alt_rounded,
+                  size: 64,
+                  color: Color(0xFF5865F2),
+                ),
                 const SizedBox(height: 12),
-                Text('Quick Notes',
-                    style: Theme.of(context).textTheme.headlineMedium),
+                Text(
+                  'Quick Notes',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
                 const SizedBox(height: 4),
-                Text('Welcome back!',
-                    style: Theme.of(context).textTheme.bodyMedium),
+                Text(
+                  'Welcome back!',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
                 const SizedBox(height: 40),
                 Form(
                   key: _formKey,
@@ -95,11 +104,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           labelText: 'Password',
                           prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
-                            icon: Icon(_obscurePassword
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined),
-                            onPressed: () => setState(
-                                () => _obscurePassword = !_obscurePassword),
+                            icon: Icon(
+                              _obscurePassword
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                            ),
+                            onPressed:
+                                () => setState(
+                                  () => _obscurePassword = !_obscurePassword,
+                                ),
                           ),
                         ),
                         textInputAction: TextInputAction.done,
@@ -116,28 +129,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         height: 48,
                         child: ElevatedButton(
                           onPressed: isLoading ? null : _login,
-                          child: isLoading
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
+                          child:
+                              isLoading
+                                  ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: Colors.white))
-                              : const Text('Sign In'),
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                  : const Text('Sign In'),
                         ),
                       ),
                       const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Don't have an account?",
-                              style: Theme.of(context).textTheme.bodyMedium),
-                          TextButton(
-                            onPressed: () => context.go('/register'),
-                            child: const Text('Register'),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text("Don't have an account?",
+                      //         style: Theme.of(context).textTheme.bodyMedium),
+                      //     TextButton(
+                      //       onPressed: () => context.go('/register'),
+                      //       child: const Text('Register'),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ),
