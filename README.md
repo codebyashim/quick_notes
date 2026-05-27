@@ -172,3 +172,5 @@ Firebase Auth requires email. The app uses a synthetic email: `{username}@quickn
 notes/{uid}/{noteId}/background    — note background images
 files/{uid}/{fileId}/{filename}    — uploaded user files
 ```
+flutter build web --release
+firebase deploy --only hosting

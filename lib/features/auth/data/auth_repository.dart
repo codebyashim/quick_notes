@@ -20,10 +20,11 @@ class AuthRepository {
       '${username.toLowerCase().trim()}${AppConstants.syntheticEmailDomain}';
 
   Future<bool> checkUsernameAvailable(String username) async {
-    final q = await _usersRef
-        .where('username', isEqualTo: username.toLowerCase().trim())
-        .limit(1)
-        .get();
+    final q =
+        await _usersRef
+            .where('username', isEqualTo: username.toLowerCase().trim())
+            .limit(1)
+            .get();
     return q.docs.isEmpty;
   }
 
@@ -32,20 +33,16 @@ class AuthRepository {
 
     if (clean.length < 3 || clean.length > 20) {
       throw const ValidationException(
-          'Username must be between 3 and 20 characters');
+        'Username must be between 3 and 20 characters',
+      );
     }
     if (!RegExp(r'^[a-z0-9_]+$').hasMatch(clean)) {
       throw const ValidationException(
-          'Username can only contain letters, numbers, and underscores');
+        'Username can only contain letters, numbers, and underscores',
+      );
     }
     if (password.length < 6) {
-      throw const ValidationException(
-          'Password must be at least 6 characters');
-    }
-
-    final available = await checkUsernameAvailable(clean);
-    if (!available) {
-      throw const AuthException('Username is already taken');
+      throw const ValidationException('Password must be at least 6 characters');
     }
 
     try {
@@ -70,6 +67,8 @@ class AuthRepository {
       return user;
     } on FirebaseAuthException catch (e) {
       throw AuthException(_mapFirebaseError(e));
+    } catch (e) {
+      throw AuthException('Registration failed: ${e.toString()}');
     }
   }
 
@@ -85,7 +84,8 @@ class AuthRepository {
       final userDoc = await _usersRef.doc(uid).get();
       if (!userDoc.exists) {
         throw const AuthException(
-            'Account data not found. Please contact support.');
+          'Account data not found. Please contact support.',
+        );
       }
 
       final user = UserModel.fromMap(userDoc.data()!);
@@ -135,6 +135,8 @@ class AuthRepository {
       case 'wrong-password':
       case 'invalid-credential':
         return 'Invalid username or password';
+      case 'invalid-email':
+        return 'Invalid username. Do not include @ or email address.';
       case 'email-already-in-use':
         return 'Username is already taken';
       case 'weak-password':
@@ -150,9 +152,5 @@ class AuthRepository {
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepository(
-    FirebaseAuth.instance,
-    FirebaseFirestore.instance,
-    ref,
-  );
+  return AuthRepository(FirebaseAuth.instance, FirebaseFirestore.instance, ref);
 });

@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String syntheticEmailDomain = '@quicknotes.app';
+  static const String syntheticEmailDomain = '@gmail.com';
   static const String usersCollection = 'users';
   static const String sessionsCollection = 'sessions';
   static const String notesCollection = 'notes';

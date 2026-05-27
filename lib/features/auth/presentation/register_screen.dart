@@ -78,6 +78,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           helperText: '3–20 chars, letters/numbers/underscore',
                         ),
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.text,
                         autocorrect: false,
                         enableSuggestions: false,
                         validator: (v) {

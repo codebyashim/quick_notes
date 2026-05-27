@@ -74,12 +74,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           prefixIcon: Icon(Icons.person_outline),
                         ),
                         textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.text,
                         autocorrect: false,
                         enableSuggestions: false,
                         validator: (v) {
                           if (v == null || v.trim().isEmpty) {
                             return 'Enter your username';
                           }
+                          // if (v.contains('@')) {
+                          //   return 'Enter your username, not your email address';
+                          // }
                           return null;
                         },
                       ),
